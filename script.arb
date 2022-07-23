@@ -1,0 +1,29 @@
+#This method returns the best days to buy and sell stock based on the array of prices given
+
+def stock_picker(days)
+    max_profit = 0 
+    best_days = []
+
+    days.each_with_index do |buy_day,buy_index| 
+        days.each_with_index do |sell_day, sell_index| #loops to compute profit gained from selling
+            if buy_index < sell_index #makes sure to not include prices previous to buy index
+                profit = buy_day - sell_day 
+                if (profit < 0 && profit < max_profit)
+                    max_profit = profit
+                    best_days.clear #removes previously stored days
+                    best_days.push(buy_index, sell_index)
+                end
+            end
+        end
+    end
+
+    if max_profit == 0 
+        "There is profit gained from the prices. Sorry"
+    else
+        p "Profit is $#{max_profit.abs}."
+        best_days
+    end
+end
+
+p stock_picker [1,1,20,1]
+
